@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:text="Don't have an account? "/>
             <TextView
-                android:id="@+id/textID1"
+                android:id="@+id/textCreate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
