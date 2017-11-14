@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.mujahid.instatrackv2.Login">
 
-
     <RelativeLayout
         android:id="@+id/rtLSplash1"
         android:layout_width="match_parent"
@@ -50,5 +49,6 @@
         </LinearLayout>
 
     </RelativeLayout>
+
 
 </android.support.constraint.ConstraintLayout>
