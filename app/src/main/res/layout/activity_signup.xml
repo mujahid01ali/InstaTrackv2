@@ -9,7 +9,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
         <EditText
             android:id="@+id/etPhoneSignup"
             android:layout_width="match_parent"
@@ -23,7 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/etPhoneSignup"
-            android:text="Next"/>
+            android:text="Next"
+            android:layout_marginTop="10dp"/>
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
