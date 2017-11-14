@@ -6,4 +6,24 @@
     android:layout_height="match_parent"
     tools:context="com.example.mujahid.instatrackv2.Signup">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+        <EditText
+            android:id="@+id/etPhoneSignup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="10"
+            android:hint="Mobile Number"
+            android:gravity="center"/>
+        <Button
+            android:id="@+id/btnSignup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etPhoneSignup"
+            android:text="Next"/>
+    </RelativeLayout>
+
 </android.support.constraint.ConstraintLayout>
