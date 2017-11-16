@@ -62,7 +62,7 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> param = new HashMap<>();
-                    param.put("mobile", textPhone.getText().toString().trim());
+                    param.put("phone", textPhone.getText().toString().trim());
                     return param;
                 }
             };
