@@ -14,7 +14,7 @@
         android:layout_marginRight="20dp"
         android:gravity="center">
         <EditText
-            android:id="@+id/etId1"
+            android:id="@+id/etPhoneNum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"
@@ -22,7 +22,7 @@
             android:gravity="center" />
         <Button
             android:id="@+id/btnGetOTP"
-            android:layout_below="@+id/etId1"
+            android:layout_below="@+id/etPhoneNum"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
