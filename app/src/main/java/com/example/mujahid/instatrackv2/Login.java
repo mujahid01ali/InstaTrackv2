@@ -51,7 +51,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void sendOtp() {
-        String url = Config.baseUrl+"loginOtp.php";
+        String url = Config.baseUrl+"loginOTP.php";
         if (etPhoneNum.getText().toString().equals("")) {
             Toast.makeText(Login.this, "Please Enter mobile number", Toast.LENGTH_LONG).show();
         } else {
