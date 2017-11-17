@@ -2,8 +2,8 @@ package com.example.mujahid.instatrackv2;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,7 +56,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             Toast.makeText(Login.this, "Please Enter mobile number", Toast.LENGTH_LONG).show();
         } else {
             dialog=ProgressDialog.show(Login.this,"","Please Wait...",false,false);
-            StringRequest strRqstSignup = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            StringRequest loginRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     if (response.contains("success")) {
@@ -85,7 +84,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     return param;
                 }
             };
-            RequestHandler.getInstance(Login.this).addToRequestQueue(strRqstSignup);
+            RequestHandler.getInstance(Login.this).addToRequestQueue(loginRequest);
         }
     }
 }
