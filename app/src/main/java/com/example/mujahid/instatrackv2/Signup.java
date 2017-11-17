@@ -45,7 +45,7 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
                         dialog.dismiss();
                         Intent intent = new Intent(Signup.this, Login.class);
                         startActivity(intent);
-                    } else if (response.contains("fail")) {
+                    } else if (response.contains("fail")  || response.contains("Error inserting into db")) {
                         dialog.dismiss();
                         Toast.makeText(Signup.this, "Some error occured", Toast.LENGTH_LONG).show();
                     }
