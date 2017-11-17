@@ -6,4 +6,27 @@
     android:layout_height="match_parent"
     tools:context="com.example.mujahid.instatrackv2.VerifySignupOTP">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+        <EditText
+            android:id="@+id/etOtpVerifySignup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="4"
+            android:hint="Enter OTP"
+            android:gravity="center"/>
+        <Button
+            android:id="@+id/btnSignupOtpCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etOtpVerifySignup"
+            android:text="Next"
+            android:layout_marginTop="10dp"/>
+    </RelativeLayout>
+
 </android.support.constraint.ConstraintLayout>
