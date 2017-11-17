@@ -1,7 +1,9 @@
 package com.example.mujahid.instatrackv2;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,10 +24,12 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
     TextView textPhone;
     Button btnNext;
     ProgressDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        //money customer
         textPhone = (TextView) findViewById(R.id.etPhoneSignup);
         btnNext = (Button) findViewById(R.id.btnSignup);
         btnNext.setOnClickListener(this);
@@ -43,7 +47,8 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
                 public void onResponse(String response) {
                     if (response.contains("success")) {
                         dialog.dismiss();
-                        Intent intent = new Intent(Signup.this, Login.class);
+                        Intent intent = new Intent(Signup.this, VerifySignupOTP.class);
+                        intent.putExtra("phone",textPhone.toString().trim());
                         startActivity(intent);
                     } else if (response.contains("fail")  || response.contains("Error inserting into db")) {
                         dialog.dismiss();
