@@ -5,5 +5,5 @@ package com.example.mujahid.instatrackv2;
  */
 
 public class Config {
-    public static final String baseUrl="http://45161fea.ngrok.io/instatrack/";
+    public static final String baseUrl="http://30fc30dd.ngrok.io/instatrack/";
 }
