@@ -28,9 +28,9 @@ public class VerifySignupOTP extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_signup_otp);
-        Intent intent=getIntent();
-        phoneNum=intent.getStringExtra("phone");
-        Toast.makeText(VerifySignupOTP.this,phoneNum,Toast.LENGTH_LONG).show();
+        Bundle extra=getIntent().getExtras();
+        phoneNum=extra.getString("phone");
+        Toast.makeText(VerifySignupOTP.this,phoneNum.toString(),Toast.LENGTH_LONG).show();
         btnOtpCheckSignup = (Button) findViewById(R.id.btnSignupOtpCheck);
         etOtpSignup = (EditText) findViewById(R.id.etOtpVerifySignup);
         btnOtpCheckSignup.setOnClickListener(this);
