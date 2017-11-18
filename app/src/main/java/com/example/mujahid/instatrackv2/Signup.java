@@ -47,7 +47,7 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
                     if (response.contains("success")) {
                         dialog.dismiss();
                         Intent intent = new Intent(Signup.this, VerifySignupOTP.class);
-                        intent.putExtra("phone",textPhone.toString().trim());
+                        intent.putExtra("phone",textPhone.getText().toString().trim());
                         startActivity(intent);
                     } else if (response.contains("fail")  || response.contains("Error inserting into db")) {
                         dialog.dismiss();

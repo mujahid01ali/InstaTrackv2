@@ -54,11 +54,15 @@ public class VerifySignupOTP extends AppCompatActivity implements View.OnClickLi
             public void onResponse(String response) {
                 if (response.contains("success")) {
                     dialog.dismiss();
-                    Intent intent = new Intent(VerifySignupOTP.this, Login.class);
+                    Intent intent = new Intent(VerifySignupOTP.this, MainActivity.class);
                     startActivity(intent);
                 } else if (response.contains("fail")) {
                     dialog.dismiss();
                     Toast.makeText(VerifySignupOTP.this, "Incorrect OTP ", Toast.LENGTH_LONG).show();
+                }
+                else if (response.contains("twillio error")){
+                    dialog.dismiss();
+                    Toast.makeText(VerifySignupOTP.this,"Incorrect Number",Toast.LENGTH_SHORT).show();
                 }
             }
 
