@@ -58,7 +58,7 @@ public class VerifySignupOTP extends AppCompatActivity implements View.OnClickLi
                     startActivity(intent);
                 } else if (response.contains("fail")) {
                     dialog.dismiss();
-                    Toast.makeText(VerifySignupOTP.this, "You have entered wrong number ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(VerifySignupOTP.this, "Incorrect OTP ", Toast.LENGTH_LONG).show();
                 }
             }
 
