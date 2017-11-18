@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -61,11 +62,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 public void onResponse(String response) {
                     if (response.contains("success")) {
                         dialog.dismiss();
-                        Intent intent = new Intent(Login.this, Login.class);
+                        Intent intent = new Intent(Login.this, VerifySignupOTP.class);
+                        intent.putExtra("phone",etPhoneNum.getText().toString().trim());
                         startActivity(intent);
                     } else if (response.contains("fail")) {
                         dialog.dismiss();
-                        Toast.makeText(Login.this, "You have entered wrong number ", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Login.this, "Unexpected Error", Toast.LENGTH_LONG).show();
                     }
                 }
 
@@ -84,6 +86,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     return param;
                 }
             };
+            loginRequest.setRetryPolicy(new DefaultRetryPolicy(30000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             RequestHandler.getInstance(Login.this).addToRequestQueue(loginRequest);
         }
     }
