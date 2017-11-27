@@ -1,5 +1,7 @@
 package com.example.mujahid.instatrackv2;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList groupList;
     private RecyclerView recyclerView;
     JSONArray jsonArray=null;
+    ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         groupList=new ArrayList<>();
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        // TODO Handle item click
+                        Group group = (Group) groupList.get(position);
+                        Toast.makeText(getApplicationContext(), group.getName() + " is selected!", Toast.LENGTH_SHORT).show();
+
+                    }
+                })
+        );
         getGroups();
 
         btnGroupCreate.setOnClickListener(this);
@@ -48,10 +61,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void getGroups() {
 
-
+        dialog=ProgressDialog.show(MainActivity.this,"","Please Wait",true,true);
         StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                dialog.dismiss();
                 if (response.contains("null")) {
                     Toast.makeText(MainActivity.this, "No Recored Found", Toast.LENGTH_SHORT).show();
                 } else {
@@ -84,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
                 Toast.makeText(MainActivity.this,"Connection error", Toast.LENGTH_SHORT).show();
 
             }
@@ -94,6 +109,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        Intent intent=new Intent(MainActivity.this,CreateGroup.class);
+        startActivity(intent);
 
     }
 }
