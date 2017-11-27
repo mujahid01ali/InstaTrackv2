@@ -35,13 +35,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
         <activity
             android:name=".GroupActivity"
             android:label="@string/title_activity_group"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CreateGroup"></activity>
-=======
 
 
         <meta-data android:name="com.google.android.gms.version"
@@ -50,7 +48,7 @@
             android:value="AIzaSyBQRer0jUW7z2ncrwIqVUrpbCNQGNE8F_k"/>
 
 
->>>>>>> f6f329bfd16d9a472b8cdebd72677601555104f7
+
     </application>
 
 </manifest>
