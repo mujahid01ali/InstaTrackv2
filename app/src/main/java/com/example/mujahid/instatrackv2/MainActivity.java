@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button btnGroupCreate;
-    public  static final String url=Config.baseUrl+"getGroups.php?phone="+"9997606648";
+    public String url=Config.baseUrl+"getGroups.php?phone="+SharedPrefManager.getInstance(MainActivity.this).getPhoneNumber().toString().trim();
     ArrayList groupList;
     private RecyclerView recyclerView;
     JSONArray jsonArray=null;
