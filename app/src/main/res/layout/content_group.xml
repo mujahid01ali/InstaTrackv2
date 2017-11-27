@@ -17,7 +17,8 @@
         app:cameraTargetLng="-73.9857"
         app:cameraBearing="112.5"
         app:cameraTilt="0"
-        app:cameraZoom="17" />
+        app:cameraZoom="17"
+        />
 
 
     <android.support.v7.widget.RecyclerView
