@@ -73,6 +73,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         }
         else{
             Toast.makeText(this,"Location permission not available",Toast.LENGTH_SHORT).show();
+            
         }
 
     }
