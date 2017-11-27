@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button btnGroupCreate;
-    public  static final String url="http://fc009c64.ngrok.io/InstaTrack_Script/getGroups.php?phone="+"9997606648";
+    public  static final String url=Config.baseUrl+"getGroups.php?phone="+"9997606648";
     ArrayList groupList;
     private RecyclerView recyclerView;
     JSONArray jsonArray=null;

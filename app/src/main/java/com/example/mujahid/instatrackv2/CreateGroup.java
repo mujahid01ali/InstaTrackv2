@@ -37,7 +37,7 @@ public class CreateGroup extends AppCompatActivity implements View.OnClickListen
         if (etGroupName.getText().toString().equals("")){
             Toast.makeText(CreateGroup.this,"Enter Group Name",Toast.LENGTH_SHORT).show();
         }else{
-            url="http://fc009c64.ngrok.io/InstaTrack_Script/createGroup.php";
+            url=Config.baseUrl+"createGroup.php";
             dialog=ProgressDialog.show(CreateGroup.this,"","Please Wait",true,true);
             StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
