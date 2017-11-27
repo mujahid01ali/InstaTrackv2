@@ -62,6 +62,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 public void onResponse(String response) {
                     if (response.contains("success")) {
                         dialog.dismiss();
+                        SharedPrefManager.getInstance(Login.this).login(etPhoneNum.getText().toString());
                         Intent intent = new Intent(Login.this, VerifySignupOTP.class);
                         intent.putExtra("phone",etPhoneNum.getText().toString().trim());
                         startActivity(intent);
