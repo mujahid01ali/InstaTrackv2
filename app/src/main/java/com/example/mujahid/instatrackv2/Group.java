@@ -9,20 +9,13 @@ public class Group {
     public Group(){
 
     }
-    public Group(String name,String admin){
+    public Group(String name){
         this.name=name;
-        this.admin=admin;
     }
     public String getName(){
         return name;
     }
     public void setName(String name){
         this.name=name;
-    }
-    public String getAdmin(){
-        return admin;
-    }
-    public void setAdmin(String admin){
-        this.admin=admin;
     }
 }
