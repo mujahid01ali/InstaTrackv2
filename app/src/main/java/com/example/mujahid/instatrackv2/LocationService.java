@@ -12,11 +12,19 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by n5050 on 11/27/2017.
@@ -27,6 +35,8 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     protected GoogleApiClient googleApiClient;
     protected Location location;
     protected LocationRequest locationRequest;
+    double longitude;
+    double latitude;
 
 
     public void buildGoogleApiClient(){
@@ -38,6 +48,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     }
     @Override
     public void onCreate() {
+        Toast.makeText(this,"oncreate",Toast.LENGTH_SHORT).show();
         super.onCreate();
         buildGoogleApiClient();
     }
@@ -57,6 +68,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
             if(!googleApiClient.isConnected()){
                 googleApiClient.connect();
             }
+            Toast.makeText(this,"Service Started",Toast.LENGTH_SHORT).show();
 
         }
         return START_STICKY;
@@ -73,7 +85,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         }
         else{
             Toast.makeText(this,"Location permission not available",Toast.LENGTH_SHORT).show();
-            
+
         }
 
     }
@@ -91,6 +103,35 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
 
     @Override
     public void onLocationChanged(Location location) {
+        longitude=location.getLongitude();
+        latitude=location.getLatitude();
+
+
+        String url=Config.baseUrl+"updateLocation.php";
+
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            protected Map<String,String> getParams() throws AuthFailureError{
+                Map<String, String> param = new HashMap<>();
+                param.put("phone","+918218426482");
+                param.put("longitude",longitude+"");
+                param.put("latitude",latitude+"");
+
+                return param;
+
+            }
+
+        };
+        RequestHandler.getInstance(LocationService.this).addToRequestQueue(stringRequest);
 
     }
 }
