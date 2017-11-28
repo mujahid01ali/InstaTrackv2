@@ -127,7 +127,6 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
                 param.put("latitude",latitude+"");
 
                 return param;
-
             }
 
         };
