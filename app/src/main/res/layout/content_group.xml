@@ -12,13 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:name="com.google.android.gms.maps.MapFragment"
-        android:id="@+id/gMap"
-        app:cameraTargetLat="40.7484"
-        app:cameraTargetLng="-73.9857"
-        app:cameraBearing="112.5"
-        app:cameraTilt="0"
-        app:cameraZoom="17"
-        />
+        android:id="@+id/gMap" />
 
 
     <android.support.v7.widget.RecyclerView

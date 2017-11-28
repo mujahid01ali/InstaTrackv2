@@ -107,7 +107,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         latitude=location.getLatitude();
 
 
-        String url=Config.baseUrl+"updateLocation.php";
+        String url=Config.baseUrl2+"updateLocation.php";
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
