@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 /**
  * Created by Mujahid on 11/28/2017.
@@ -37,6 +39,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Group group=groupList.get(position);
         holder.name.setText(group.getName());
+        holder.gId.setText(group.getId());
 
     }
 
@@ -46,10 +49,12 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name;
+        public TextView name,gId;
         public MyViewHolder(View itemView) {
             super(itemView);
             name=(TextView) itemView.findViewById(R.id.name);
+            gId=(TextView) itemView.findViewById(R.id.gId);
+            gId.setVisibility(View.GONE);
 
             }
     }

@@ -5,7 +5,7 @@
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:paddingBottom="10dp"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -17,7 +17,12 @@
         android:layout_height="30dp"
        android:gravity="center"
         android:textSize="16dp"
+        android:textColor="@color/colorAccent"
         android:textStyle="bold"
         />
+    <TextView
+        android:id="@+id/gId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -47,9 +47,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
-                        // TODO Handle item click
                         Group group = (Group) groupList.get(position);
-                        Toast.makeText(getApplicationContext(), group.getName() + " is selected!", Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(MainActivity.this,GroupActivity.class);
+                        intent.putExtra("groupId",group.getId().trim());
+                        startActivity(intent);
+                       // Toast.makeText(getApplicationContext(),"group Name is "+ group.getName()+" and Group id is "+group.getId() + " is selected!", Toast.LENGTH_SHORT).show();
 
                     }
                 })
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnGroupCreate.setOnClickListener(this);
     }
+
 
     private void getGroups() {
 
@@ -72,15 +75,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.d("MainActivity",response);
                     groupList.clear();
                     try {
-                        String name;
-                        String link;
+
                         JSONObject jsonObject = new JSONObject(response);
                         jsonArray = jsonObject.getJSONArray("result");
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject ob = jsonArray.getJSONObject(i);
                             groupList.add(new Group(
-                                    ob.getString("name")
+                                    ob.getString("name"),
+                                    ob.getString("id").toString()
                             ));
 
                         }
