@@ -30,16 +30,12 @@ public class GroupUsers extends AppCompatActivity implements View.OnClickListene
     private RecyclerView recyclerView;
     JSONArray jsonArray=null;
     ProgressDialog dialog;
-    public String groupId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_users);
         btnAddUser=(FloatingActionButton) findViewById(R.id.btnAddUser);
-        Bundle b=new Bundle();
-        b=getIntent().getExtras();
-        groupId=b.getString("groupId");
         recyclerView=(RecyclerView) findViewById(R.id.recViewUsers);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -51,7 +47,7 @@ public class GroupUsers extends AppCompatActivity implements View.OnClickListene
                 new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         Users users = (Users) userList.get(position);
-                         Toast.makeText(getApplicationContext(),"User Phone Number is "+ users.getPhone()+" and User id is "+users.getId() + " is selected!"+" And the Group ID is "+groupId, Toast.LENGTH_SHORT).show();
+                         Toast.makeText(getApplicationContext(),"User Phone Number is "+ users.getPhone()+" and User id is "+users.getId() + " is selected!"+" And the Group ID is "+SharedPrefManager.getInstance(GroupUsers.this).getGroupId(), Toast.LENGTH_SHORT).show();
 
                     }
                 })
@@ -61,7 +57,7 @@ public class GroupUsers extends AppCompatActivity implements View.OnClickListene
     }
 
     private void getUsers() {
-        String url=Config.baseUrl+"getUsers.php";
+        String url=Config.baseUrl+"getUsers.php?groupId="+SharedPrefManager.getInstance(GroupUsers.this).getGroupId();
 
         dialog=ProgressDialog.show(GroupUsers.this,"","Please Wait",true,true);
         StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -111,7 +107,6 @@ public class GroupUsers extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View view) {
         Intent inAdd=new Intent(GroupUsers.this,AddUsers.class);
-        inAdd.putExtra("groupId",groupId.trim());
         startActivity(inAdd);
     }
 }

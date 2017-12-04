@@ -12,6 +12,7 @@ public class SharedPrefManager {
     private static Context mCtx;
     private static final String Mypref = "MyPref";
     private static final String key_user = "phone";
+    private static final String key_gId = "groupId";
     private SharedPrefManager(Context context) {
         mCtx = context;
     }
@@ -27,6 +28,14 @@ public class SharedPrefManager {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(Mypref, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(key_user, phone);
+        editor.commit();
+        editor.apply();
+        return true;
+    }
+    public boolean groupId(String id) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(Mypref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(key_gId, id);
         editor.commit();
         editor.apply();
         return true;
@@ -57,4 +66,9 @@ public class SharedPrefManager {
 
     }
 
+    public String getGroupId() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(Mypref, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(key_gId, null);
+
+    }
 }

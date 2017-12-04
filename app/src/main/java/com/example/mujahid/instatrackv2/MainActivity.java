@@ -52,8 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         Group group = (Group) groupList.get(position);
+                        SharedPrefManager.getInstance(MainActivity.this).groupId(group.getId());
                         Intent intent=new Intent(MainActivity.this,GroupUsers.class);
-                        intent.putExtra("groupId",group.getId().trim());
                         startActivity(intent);
                        // Toast.makeText(getApplicationContext(),"group Name is "+ group.getName()+" and Group id is "+group.getId() + " is selected!", Toast.LENGTH_SHORT).show();
 

@@ -2,6 +2,7 @@ package com.example.mujahid.instatrackv2;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.provider.ContactsContract;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -29,6 +31,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddUsers extends AppCompatActivity {
 
@@ -64,8 +68,8 @@ public class AddUsers extends AppCompatActivity {
                 new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         Contact contact = (Contact) StoreContacts.get(position);
-
-                        Toast.makeText(getApplicationContext(), contact.getPhone(), Toast.LENGTH_SHORT).show();
+                            addUserToGroup(contact.getPhone());
+                        Toast.makeText(getApplicationContext(), "Group Id is"+SharedPrefManager.getInstance(AddUsers.this).getGroupId()+"    " +contact.getPhone(), Toast.LENGTH_SHORT).show();
 
                     }
                 })
@@ -81,6 +85,47 @@ public class AddUsers extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void addUserToGroup(final String phone) {
+        //Method for adding the member to groups
+        dialog=ProgressDialog.show(AddUsers.this,"","Please Wait...",false,false);
+        String url=Config.baseUrl+"addUserToGroup.php";
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                dialog.dismiss();
+                if (response.toString().contains("success")){
+                    Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_LONG).show();
+                    Intent intentG=new Intent(AddUsers.this,GroupUsers.class);
+                    startActivity(intentG);
+                    finish();
+                }else if (response.toString().contains("failure")) {
+                    Toast.makeText(AddUsers.this, "Please try Again", Toast.LENGTH_LONG).show();
+                } else if (response.toString().contains("failed")) {
+                    Toast.makeText(AddUsers.this, "Error Occured", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
+                Toast.makeText(AddUsers.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> param = new HashMap<>();
+                param.put("groupId",SharedPrefManager.getInstance(AddUsers.this).getGroupId());
+                param.put("phone",phone);
+                return param;
+            }
+
+        };
+        RequestHandler.getInstance(AddUsers.this).addToRequestQueue(stringRequest);
 
     }
 
