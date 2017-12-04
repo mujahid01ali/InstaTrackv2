@@ -30,6 +30,7 @@ public class GroupUsers extends AppCompatActivity implements View.OnClickListene
     private RecyclerView recyclerView;
     JSONArray jsonArray=null;
     ProgressDialog dialog;
+    public String groupId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class GroupUsers extends AppCompatActivity implements View.OnClickListene
         btnAddUser=(FloatingActionButton) findViewById(R.id.btnAddUser);
         Bundle b=new Bundle();
         b=getIntent().getExtras();
-        final String groupId=b.getString("groupId");
+        groupId=b.getString("groupId");
         recyclerView=(RecyclerView) findViewById(R.id.recViewUsers);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -110,6 +111,7 @@ public class GroupUsers extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View view) {
         Intent inAdd=new Intent(GroupUsers.this,AddUsers.class);
+        inAdd.putExtra("groupId",groupId.trim());
         startActivity(inAdd);
     }
 }
