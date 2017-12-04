@@ -1,17 +1,13 @@
-package com.example.mujahid.myapplication;
+package com.example.mujahid.instatrackv2;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.security.acl.Group;
 import java.util.List;
-
-import static android.media.CamcorderProfile.get;
 
 /**
  * Created by Mujahid on 12/1/2017.
@@ -22,7 +18,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
     private Context mCtx;
     private List<Contact> list;
 
-    public ContactAdapter(Context mCtx,List<Contact> list){
+    public ContactAdapter(Context mCtx, List<Contact> list){
         this.mCtx=mCtx;
         this.list=list;
     }

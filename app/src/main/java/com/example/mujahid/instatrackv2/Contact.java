@@ -1,4 +1,4 @@
-package com.example.mujahid.myapplication;
+package com.example.mujahid.instatrackv2;
 
 /**
  * Created by Mujahid on 12/1/2017.

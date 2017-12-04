@@ -109,6 +109,7 @@ public class GroupUsers extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-
+        Intent inAdd=new Intent(GroupUsers.this,AddUsers.class);
+        startActivity(inAdd);
     }
 }
