@@ -14,6 +14,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -49,6 +50,9 @@ public class GroupActivity extends AppCompatActivity
     boolean mapReady=false;
     Intent intent;
     protected int groupID;
+    private RecyclerView recyclerView;
+    private MembersListAdapter membersListAdapter;
+    private MapFragment mapFragment;
 
     protected ArrayList<Location> positions;
     protected ArrayList<String> phoneNumber;
@@ -78,17 +82,20 @@ public class GroupActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        intent=new Intent(this,LocationService.class);
-
         groupID=1;
         positions=new ArrayList<>();
         phoneNumber=new ArrayList<>();
+
+        intent=new Intent(this,LocationService.class);
+        /*recyclerView=(RecyclerView) findViewById(R.id.members_list);
+        membersListAdapter=new MembersListAdapter(this,phoneNumber);
+        RecyclerView.LayoutManager mLayoutManager=new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(membersListAdapter);*/
         fetchData();
-
-
-        MapFragment mapFragment=(MapFragment) getFragmentManager().findFragmentById(R.id.gMap);
+        mapFragment=(MapFragment) getFragmentManager().findFragmentById(R.id.gMap);
         mapFragment.getMapAsync(this);
-
 
 
     }
@@ -104,6 +111,20 @@ public class GroupActivity extends AppCompatActivity
             //startService(intent);
             //Toast.makeText(this,"Service started",Toast.LENGTH_SHORT).show();
         }
+
+
+
+
+    }
+
+    public void refreshData(View view){
+        positions.clear();
+        phoneNumber.clear();
+
+        fetchData();
+        mapFragment=(MapFragment) getFragmentManager().findFragmentById(R.id.gMap);
+        mapFragment.getMapAsync(this);
+
     }
     @Override
     public void onRequestPermissionsResult(int requestCode,String[] permissions,int[] grantResults){
@@ -128,6 +149,7 @@ public class GroupActivity extends AppCompatActivity
         //addMarkers();
 
     }
+
 
     @Override
     public void onBackPressed() {
@@ -218,6 +240,8 @@ public class GroupActivity extends AppCompatActivity
                     }
                     Log.e("Size",positions.size()+"");
                     addMarkers();
+                    membersListAdapter.notifyDataSetChanged();
+
 
                 }
                 catch (Exception ex){
@@ -246,6 +270,8 @@ public class GroupActivity extends AppCompatActivity
 
     public void addMarkers(){
         Toast.makeText(this,"Add Marker started "+positions.size(),Toast.LENGTH_SHORT).show();
+
+        gMap.clear();
 
         for(int i=0;i<positions.size();i++){
             Location location=positions.get(i);
