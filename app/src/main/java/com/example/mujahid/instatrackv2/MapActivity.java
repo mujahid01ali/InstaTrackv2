@@ -5,20 +5,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -43,62 +33,29 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GroupActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,OnMapReadyCallback {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     GoogleMap gMap;
     boolean mapReady=false;
     Intent intent;
     protected int groupID;
-    private RecyclerView recyclerView;
-    private MembersListAdapter membersListAdapter;
     private MapFragment mapFragment;
-
     protected ArrayList<Location> positions;
     protected ArrayList<String> phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
+        setContentView(R.layout.activity_map);
         groupID=1;
         positions=new ArrayList<>();
         phoneNumber=new ArrayList<>();
-
         intent=new Intent(this,LocationService.class);
-        /*recyclerView=(RecyclerView) findViewById(R.id.members_list);
-        membersListAdapter=new MembersListAdapter(this,phoneNumber);
-        RecyclerView.LayoutManager mLayoutManager=new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(membersListAdapter);*/
         fetchData();
-        mapFragment=(MapFragment) getFragmentManager().findFragmentById(R.id.gMap);
+        mapFragment=(MapFragment) getFragmentManager().findFragmentById(R.id.googleMap);
         mapFragment.getMapAsync(this);
-
-
     }
+
 
     @Override
     public void onStart(){
@@ -111,21 +68,8 @@ public class GroupActivity extends AppCompatActivity
             //startService(intent);
             //Toast.makeText(this,"Service started",Toast.LENGTH_SHORT).show();
         }
-
-
-
-
     }
 
-    public void refreshData(View view){
-        positions.clear();
-        phoneNumber.clear();
-
-        fetchData();
-        mapFragment=(MapFragment) getFragmentManager().findFragmentById(R.id.gMap);
-        mapFragment.getMapAsync(this);
-
-    }
     @Override
     public void onRequestPermissionsResult(int requestCode,String[] permissions,int[] grantResults){
         if(requestCode==1234){
@@ -140,72 +84,12 @@ public class GroupActivity extends AppCompatActivity
             }
         }
     }
+
+
     @Override
     public void onMapReady(GoogleMap googleMap){
-
-
         gMap=googleMap;
         mapReady=true;
-        //addMarkers();
-
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.group, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
     public void fetchData(){
@@ -240,7 +124,7 @@ public class GroupActivity extends AppCompatActivity
                     }
                     Log.e("Size",positions.size()+"");
                     addMarkers();
-                    membersListAdapter.notifyDataSetChanged();
+
 
 
                 }
@@ -264,7 +148,7 @@ public class GroupActivity extends AppCompatActivity
         };
         fetchRequest.setRetryPolicy(new DefaultRetryPolicy(30000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        RequestHandler.getInstance(GroupActivity.this).addToRequestQueue(fetchRequest);
+        RequestHandler.getInstance(MapActivity.this).addToRequestQueue(fetchRequest);
 
     }
 
@@ -289,6 +173,16 @@ public class GroupActivity extends AppCompatActivity
 
             }
         }
+    }
+
+    public void refreshData(View view){
+        positions.clear();
+        phoneNumber.clear();
+
+        fetchData();
+        mapFragment=(MapFragment) getFragmentManager().findFragmentById(R.id.gMap);
+        mapFragment.getMapAsync(this);
+
     }
 
 }

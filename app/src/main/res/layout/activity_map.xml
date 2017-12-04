@@ -4,16 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.mujahid.instatrackv2.GroupActivity"
-    tools:showIn="@layout/app_bar_group"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.example.mujahid.instatrackv2.MapActivity">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:name="com.google.android.gms.maps.MapFragment"
-        android:id="@+id/gMap" />
+        android:id="@+id/googleMap" />
 
     <Button
         android:layout_width="match_parent"

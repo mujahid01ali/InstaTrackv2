@@ -48,6 +48,8 @@
 
         <activity android:name=".GroupUsers" />
         <activity android:name=".AddUsers"></activity>
+        <activity android:name=".MapActivity">
+
     </application>
 
 </manifest>

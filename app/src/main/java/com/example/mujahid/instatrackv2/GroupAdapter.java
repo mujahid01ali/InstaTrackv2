@@ -3,12 +3,11 @@ package com.example.mujahid.instatrackv2;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.TextView;
-
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 /**
@@ -19,6 +18,10 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder
 
     private Context mCtx;
     private List<Group> groupList;
+
+    public interface OnItemLongClickListener{
+        public boolean OnItemLongClicked(int position);
+    }
 
     public GroupAdapter(Context mCtx,List<Group> groupList){
         this.mCtx=mCtx;
@@ -36,10 +39,37 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder
 
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
         Group group=groupList.get(position);
         holder.name.setText(group.getName());
         holder.gId.setText(group.getId());
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
+            @Override
+            public boolean onLongClick(View view){
+
+                PopupMenu popupMenu=new PopupMenu(mCtx,holder.itemView);
+                popupMenu.inflate(R.menu.group_options);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        switch (menuItem.getItemId()){
+                            case R.id.deleteGroup:
+                                //nnmn
+                                break;
+
+                        }
+
+                        return false;
+                    }
+                });
+                popupMenu.show();
+
+                return true;
+
+            }
+
+        });
 
     }
 
