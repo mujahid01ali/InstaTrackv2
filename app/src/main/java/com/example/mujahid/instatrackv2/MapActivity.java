@@ -65,7 +65,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public void fetchData(){
-        Toast.makeText(this,"Fetch Data started",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,"Fetch Data started",Toast.LENGTH_SHORT).show();
         String url=Config.baseUrl+"fetchData.php";
 
         StringRequest fetchRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -125,7 +125,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public void addMarkers(){
-        Toast.makeText(this,"Add Marker started "+positions.size(),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,"Add Marker started "+positions.size(),Toast.LENGTH_SHORT).show();
 
         gMap.clear();
 
@@ -148,6 +148,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public void refreshData(View view){
+        Toast.makeText(this,"Refreshing...",Toast.LENGTH_LONG).show();
         positions.clear();
         phoneNumber.clear();
 
