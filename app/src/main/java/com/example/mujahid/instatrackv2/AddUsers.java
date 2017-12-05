@@ -67,9 +67,9 @@ public class AddUsers extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
-                        Contact contact = (Contact) StoreContacts.get(position);
+                        Contact contact = (Contact) contactsList.get(position);
                             addUserToGroup(contact.getPhone());
-                        Toast.makeText(getApplicationContext(), "Group Id is"+SharedPrefManager.getInstance(AddUsers.this).getGroupId()+"    " +contact.getPhone(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Group Id is"+SharedPrefManager.getInstance(AddUsers.this).getGroupId()+"    " +contact.getPhone(), Toast.LENGTH_SHORT).show();
 
                     }
                 })
@@ -88,7 +88,8 @@ public class AddUsers extends AppCompatActivity {
 
     }
 
-    private void addUserToGroup(final String phone) {
+    private void addUserToGroup(String phone) {
+       final String phNumber=phone;
         //Method for adding the member to groups
         dialog=ProgressDialog.show(AddUsers.this,"","Please Wait...",false,false);
         String url=Config.baseUrl+"addUserToGroup.php";
@@ -96,7 +97,9 @@ public class AddUsers extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 dialog.dismiss();
-                if (response.toString().contains("success")){
+                if (response.toString().contains("already")){
+                    Toast.makeText(getApplicationContext(), "Already Exist", Toast.LENGTH_LONG).show();
+                }else if (response.toString().contains("success")){
                     Toast.makeText(getApplicationContext(), "Added Successfully", Toast.LENGTH_LONG).show();
                     Intent intentG=new Intent(AddUsers.this,GroupUsers.class);
                     startActivity(intentG);
@@ -104,7 +107,7 @@ public class AddUsers extends AppCompatActivity {
                 }else if (response.toString().contains("failure")) {
                     Toast.makeText(AddUsers.this, "Please try Again", Toast.LENGTH_LONG).show();
                 } else if (response.toString().contains("failed")) {
-                    Toast.makeText(AddUsers.this, "Error Occured", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddUsers.this, "Connection Error", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -120,7 +123,7 @@ public class AddUsers extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> param = new HashMap<>();
                 param.put("groupId",SharedPrefManager.getInstance(AddUsers.this).getGroupId());
-                param.put("phone",phone);
+                param.put("phone","+91"+phNumber);
                 return param;
             }
 
@@ -241,6 +244,7 @@ public class AddUsers extends AppCompatActivity {
 
     private void intersectionOfList() {
         dialog=ProgressDialog.show(AddUsers.this,"","Wait...",false,false);
+        StoreContacts.retainAll(contactsList);
         ContactAdapter adapter=new ContactAdapter(AddUsers.this,contactsList);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
