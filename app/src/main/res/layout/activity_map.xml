@@ -7,12 +7,6 @@
     android:orientation="vertical"
     tools:context="com.example.mujahid.instatrackv2.MapActivity">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:name="com.google.android.gms.maps.MapFragment"
-        android:id="@+id/googleMap" />
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,5 +14,13 @@
         android:onClick="refreshData"
         android:text="Refresh Map"
         />
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:id="@+id/googleMap" />
+
+
 
 </LinearLayout>
