@@ -1,8 +1,12 @@
 package com.example.mujahid.instatrackv2;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -39,15 +43,35 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     }
 
     @Override
+    public void onStart(){
+        super.onStart();
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},5678);
+
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String[] permissions,int[] grantResults){
+        if(requestCode==5678){
+            if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(this,"Location Permission granted",Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(this,"Permission Denied",Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
     public void onClick(View view) {
         if (view==btnSendOtp){
             sendOtp();
         }
         if(view==textCreate){
-
                     Intent intentCreate =new Intent(Login.this,Signup.class);
                     startActivity(intentCreate);
-
         }
     }
 

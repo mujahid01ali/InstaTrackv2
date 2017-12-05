@@ -1,9 +1,13 @@
 package com.example.mujahid.instatrackv2;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView recyclerView;
     JSONArray jsonArray=null;
     ProgressDialog dialog;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override public void onItemClick(View view, int position) {
                         Group group = (Group) groupList.get(position);
                         SharedPrefManager.getInstance(MainActivity.this).groupId(group.getId());
-                        Intent intent=new Intent(MainActivity.this,GroupUsers.class);
+                        Intent intent=new Intent(MainActivity.this,MapActivity.class);
                         startActivity(intent);
                        // Toast.makeText(getApplicationContext(),"group Name is "+ group.getName()+" and Group id is "+group.getId() + " is selected!", Toast.LENGTH_SHORT).show();
 
@@ -65,6 +70,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getGroups();
 
         btnGroupCreate.setOnClickListener(this);
+        intent=new Intent(this,LocationService.class);
+    }
+    @Override
+    public void onStart(){
+        super.onStart();
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
+
+            startService(intent);
+            Toast.makeText(this,"Location Service Started",Toast.LENGTH_SHORT).show();
+        }
+        else{
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1111);
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String[] permissions,int[] grantResults){
+        if(requestCode==1111){
+            if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                startService(intent);
+            }
+            else{
+                Toast.makeText(this,"Permission Denied, Cant start Location Service",Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 
