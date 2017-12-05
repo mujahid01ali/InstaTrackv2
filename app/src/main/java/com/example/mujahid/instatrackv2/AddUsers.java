@@ -123,7 +123,7 @@ public class AddUsers extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> param = new HashMap<>();
                 param.put("groupId",SharedPrefManager.getInstance(AddUsers.this).getGroupId());
-                param.put("phone","+91"+phNumber);
+                param.put("phone",phNumber);
                 return param;
             }
 
@@ -175,11 +175,11 @@ public class AddUsers extends AppCompatActivity {
                             int len=phNum.length();
                             if (len==10){
                                 contactsList.add(new Contact(
-                                        phNum
+                                        "+91"+phNum
                                 ));
                             }else if(len>10) {
                                 contactsList.add(new Contact(
-                                        phNum.substring(len-10)
+                                        "+91"+phNum.substring(len-10)
                                 ));
                             }else{
 
@@ -229,9 +229,9 @@ public class AddUsers extends AppCompatActivity {
             String phNum =phonenumber.replaceAll("[\\D+]", "");
             int len=phNum.length();
             if (len==10){
-                StoreContacts.add(new Contact(phNum));
+                StoreContacts.add(new Contact("+91"+phNum));
             }else if(len>10) {
-                StoreContacts.add(new Contact(phNum.substring(len - 10)));
+                StoreContacts.add(new Contact("+91"+phNum.substring(len - 10)));
             }else{
 
             }
