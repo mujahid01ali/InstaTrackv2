@@ -1,12 +1,8 @@
 package com.example.mujahid.instatrackv2;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -38,7 +34,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     GoogleMap gMap;
     boolean mapReady=false;
     Intent intent;
-    protected int groupID;
+    protected String groupID;
     private MapFragment mapFragment;
     protected ArrayList<Location> positions;
     protected ArrayList<String> phoneNumber;
@@ -47,7 +43,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        groupID=1;
+        groupID=SharedPrefManager.getInstance(MapActivity.this).getGroupId();
         positions=new ArrayList<>();
         phoneNumber=new ArrayList<>();
         intent=new Intent(this,LocationService.class);
@@ -60,31 +56,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onStart(){
         super.onStart();
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1234);
-
-        }
-        else{
-            //startService(intent);
-            //Toast.makeText(this,"Service started",Toast.LENGTH_SHORT).show();
-        }
     }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,String[] permissions,int[] grantResults){
-        if(requestCode==1234){
-            if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
-
-                //startService(intent);
-                //Toast.makeText(this,"Service Started",Toast.LENGTH_SHORT).show();
-
-            }
-            else{
-                Toast.makeText(this,"Permission Denied",Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap){
@@ -94,7 +66,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     public void fetchData(){
         Toast.makeText(this,"Fetch Data started",Toast.LENGTH_SHORT).show();
-        String url=Config.baseUrl2+"fetchData.php";
+        String url=Config.baseUrl+"fetchData.php";
 
         StringRequest fetchRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -180,7 +152,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         phoneNumber.clear();
 
         fetchData();
-        mapFragment=(MapFragment) getFragmentManager().findFragmentById(R.id.gMap);
+        mapFragment=(MapFragment) getFragmentManager().findFragmentById(R.id.googleMap);
         mapFragment.getMapAsync(this);
 
     }
