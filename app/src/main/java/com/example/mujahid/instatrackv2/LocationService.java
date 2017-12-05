@@ -48,7 +48,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     }
     @Override
     public void onCreate() {
-        Toast.makeText(this,"oncreate",Toast.LENGTH_SHORT).show();
+
         super.onCreate();
         buildGoogleApiClient();
     }
@@ -68,7 +68,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
             if(!googleApiClient.isConnected()){
                 googleApiClient.connect();
             }
-            Toast.makeText(this,"Service Started",Toast.LENGTH_SHORT).show();
+
 
         }
         return START_STICKY;
