@@ -1,6 +1,7 @@
 package com.example.mujahid.instatrackv2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -57,6 +58,11 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder
                             case R.id.deleteGroup:
                                 //nnmn
                                 break;
+                            case R.id.viewInfo:
+                                Intent intent=new Intent(mCtx,GroupUsers.class);
+                                mCtx.startActivity(intent);
+                                break;
+
 
                         }
 
